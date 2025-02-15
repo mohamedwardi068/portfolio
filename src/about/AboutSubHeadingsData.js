@@ -1,84 +1,61 @@
-const AboutSubHeadingData = {
+const subheadingsData = {
   1: [
     {
-      title: 'About Me',
-      content:
-        [<>
+      title: "About Me",
+      content: (
+        <>
           <p>
-            I’m Mohamed, a full-stack web developer and <br />
-            student passionate about building functional<br />
-            web applications. I enjoy learning and creating <br />
-            innovative solutions while balancing my studies<br />
-            and coding projects.
+          I'm a Full Stack Developer passionate about building seamless and efficient web applications. Skilled in HTML, CSS, JavaScript, React, Node.js, and databases, I love turning ideas into scalable, high-performance solutions. Always learning and exploring new technologies to push the boundaries of web development!
           </p>
-
-        </>]
-
-    }
+        </>
+      ),
+    },
   ],
   2: [
     {
-      title: '2024 baccalauréat degree',
-      content:
-        [<>
+      title: "Bachelor's in Internet of Things (IoT) (In Progress)",
+      content: (
+        <>
           <p>
-            I’m Mohamed, a full-stack web developer and <br />
-            student passionate about building functional<br />
-            web applications. I enjoy learning and creating <br />
-            innovative solutions while balancing my studies<br />
-            and coding projects.
+          Pursuing a degree in Internet of Things (IoT), focusing on embedded systems, connected devices, and smart technology solutions.
           </p>
-
-        </>]
-
+        </>
+      ),
     },
     {
-      title: '2024 Bachelors degree',
-      content:
-        [<>
+      title: "2023 Bachelors Degree",
+      content: (
+        <>
           <p>
-            I’m Mohamed, a full-stack web developer and <br />
-            student passionate about building functional<br />
-            web applications. I enjoy learning and creating <br />
-            innovative solutions while balancing my studies<br />
-            and coding projects.
+          Obtained my high school diploma specializing in computer science, where I developed a strong foundation in programming, algorithms, and IT concepts.
           </p>
-
-        </>]
-
-    }
+        </>
+      ),
+    },
   ],
   3: [
     {
-      title: '2024 learning',
-      content:
-        [<>
+      title: "2023 Front-End Developer",
+      content: (
+        <>
           <p>
-            I’m Mohamed, a full-stack web developer and <br />
-            student passionate about building functional<br />
-            web applications. I enjoy learning and creating <br />
-            innovative solutions while balancing my studies<br />
-            and coding projects.
+          Specialized in crafting responsive and interactive user interfaces using HTML, CSS, JavaScript, and React. Focused on delivering seamless UI/UX experiences, optimizing web performance, and ensuring cross-browser compatibility.
           </p>
-
-        </>]
-
+        </>
+      ),
     },
     {
-      title: '2025 freelancer',
-      content:
-        [<>
+      title: "2024 Back-End Developer",
+      content: (
+        <>
           <p>
-            I’m Mohamed, a full-stack web developer and <br />
-            student passionate about building functional<br />
-            web applications. I enjoy learning and creating <br />
-            innovative solutions while balancing my studies<br />
-            and coding projects.
+          Expanded expertise into back-end development, working with Node.js, Express, and databases (SQL & NoSQL) to build scalable and efficient server-side applications. Developed RESTful APIs, managed authentication, and optimized database performance for full-stack solutions.
           </p>
+        </>
+      ),
+    },
 
-        </>]
-
-    }
-  ]
+  ],
 };
-export default AboutSubHeadingData
+
+export default subheadingsData;
