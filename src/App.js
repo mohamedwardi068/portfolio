@@ -8,7 +8,7 @@ import Contact from "./contact/Contact.js"
 import "./styles/app.css"
 import Background from "./background/Background.js";
 import PlayerStats from "./playerStats/playerStats.js"
-import Avatar from "./avatar/Avatar.js";
+
 const App=()=> {
   return (
     <>

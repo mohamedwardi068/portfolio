@@ -9,7 +9,7 @@ const AboutSubheading = ({ title, content, active, onClick, menuItem }) => {
     <div
       className={classNames(subContainerClass, { "active-subheading": active })}
     >
-      <h3 onClick={onClick}>{title}</h3>
+      <h3 onClick={onClick} className="active-subheading-title">{title}</h3>
       <div className="p-container">{content}</div>
     </div>
   );
