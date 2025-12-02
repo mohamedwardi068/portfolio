@@ -46,13 +46,12 @@ export default function ContactMenu() {
     emailjs
       .send(serviceID, templateID, sanitizedData, userID)
       .then((response) => {
-        console.log("Email is sent successfully!", response.text);
         setFormData(initialState);
         setErrors({});
         setIsSent(true);
       })
       .catch((error) => {
-        console.error("Email sending failed", error);
+        // Email sending failed - user will see form still displayed
       })
       .finally(() => {
         setIsLoading(false);
