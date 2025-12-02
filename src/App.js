@@ -13,7 +13,7 @@ import PlayerStats from "./playerStats/playerStats.js"
 const App = () => {
   return (
     <>
-      <Router>
+      <Router basename="/portfolio">
         <Nav />
         <Background />
         <Routes>
