@@ -8,22 +8,22 @@ const BrowserHome = ({ onNavigate }) => {
     const projects = [
         {
             title: 'E-Commerce Platform',
-            url: 'https://github.com/Hama/ecommerce-platform',
+            url: 'https://github.com/mohamedwardi068/swoo',
             icon: '🛒',
         },
         {
-            title: 'Task Management App',
-            url: 'https://github.com/Hama/task-manager',
+            title: 'Bus Management App',
+            url: 'https://github.com/mohamedwardi068/BusAtelierDeploy',
             icon: '📋',
         },
         {
             title: 'AI Chat Interface',
-            url: 'https://github.com/Hama/ai-chat',
+            url: 'https://github.com/mohamedwardi068/ai-chat',
             icon: '🤖',
         },
         {
             title: 'Portfolio OS',
-            url: 'https://github.com/Hama/ubuntu-desktop-sim',
+            url: 'https://github.com/mohamedwardi068/portfolio',
             icon: '💻',
         },
     ];
@@ -80,7 +80,7 @@ const BrowserHome = ({ onNavigate }) => {
                     <h2 className="text-2xl font-semibold mb-6">Connect with Me</h2>
                     <div className="grid grid-cols-1 gap-4">
                         <button
-                            onClick={() => onNavigate('https://github.com/Hama')}
+                            onClick={() => onNavigate('https://github.com/mohamedwardi068')}
                             className="p-6 rounded-xl transition-all hover:scale-105 text-left"
                             style={{
                                 backgroundColor: `${currentTheme.accent}15`,
@@ -96,7 +96,7 @@ const BrowserHome = ({ onNavigate }) => {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-lg mb-1">GitHub Profile</h3>
-                                    <p className="text-sm opacity-60">github.com/Hama</p>
+                                    <p className="text-sm opacity-60">github.com/mohamedwardi068</p>
                                 </div>
                             </div>
                         </button>

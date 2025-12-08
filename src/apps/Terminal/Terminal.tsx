@@ -17,8 +17,8 @@ const Terminal = () => {
   const [showHireMe, setShowHireMe] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
-  
-  const { theme, soundEnabled, addNotification, openWindow } = useAppStore();
+
+  const { theme, soundEnabled, addNotification, openWindow, setTheme } = useAppStore();
   const currentTheme = themes[theme];
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Terminal = () => {
     if (soundEnabled) {
       const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
       audio.volume = 0.1;
-      audio.play().catch(() => {});
+      audio.play().catch(() => { });
     }
   }, [soundEnabled]);
 
@@ -50,7 +50,7 @@ const Terminal = () => {
       <p className="pl-4">ls          - List directory contents</p>
       <p className="pl-4">clear       - Clear terminal</p>
       <p className="pl-4">help        - Show this help message</p>
-      <p className="pl-4 text-yellow-400">sudo hire-me - ???</p>
+      <p className="pl-4 text-yellow-400">sudo hire me - ???</p>
     </div>
   );
 
@@ -68,9 +68,9 @@ const Terminal = () => {
   const getSkillsText = () => (
     <div className="space-y-2">
       <p style={{ color: currentTheme.accent }}>Frontend:</p>
-      <p className="pl-4">React, TypeScript, Next.js, Tailwind CSS, Framer Motion</p>
+      <p className="pl-4">React, TypeScript, Next.js, Tailwind CSS, Framer Motion,css,JS,Angular</p>
       <p style={{ color: currentTheme.accent }}>Backend:</p>
-      <p className="pl-4">Node.js, Python, PostgreSQL, MongoDB, GraphQL</p>
+      <p className="pl-4">Node.js, Python, PostgreSQL, MongoDB,Express,Spring Boot</p>
       <p style={{ color: currentTheme.accent }}>DevOps:</p>
       <p className="pl-4">Docker, AWS, CI/CD, Kubernetes, Terraform</p>
     </div>
@@ -90,10 +90,9 @@ const Terminal = () => {
   const getContactText = () => (
     <div className="space-y-1">
       <p style={{ color: currentTheme.accent }}>📬 Contact Information:</p>
-      <p className="pl-4">📧 Email: developer@example.com</p>
-      <p className="pl-4">💼 LinkedIn: linkedin.com/in/developer</p>
-      <p className="pl-4">🐙 GitHub: github.com/developer</p>
-      <p className="pl-4">🐦 Twitter: @developer</p>
+      <p className="pl-4">📧 Email: Mohamed.ouardi@isitc.u-sousse.tn</p>
+      <p className="pl-4">💼 LinkedIn: linkedin.com/in/mohamed-wardi-69502b324</p>
+      <p className="pl-4">🐙 GitHub: github.com/mohamedwardi068</p>
     </div>
   );
 
@@ -165,11 +164,13 @@ EXPERIENCE
         const blob = new Blob([cvContent], { type: 'text/plain;charset=utf-8' });
         saveAs(blob, 'resume.txt');
         break;
+      case 'sudo hire me':
       case 'sudo hire-me':
         setShowHireMe(true);
+        setTheme('hacker');
         setTimeout(() => setShowHireMe(false), 3000);
-        output = <span className="text-green-400">🎉 Excellent choice! Let's connect!</span>;
-        addNotification('🎉 You made the right choice!', 'success');
+        output = <span className="text-green-400">🎉 HACKER MODE ACTIVATED! Excellent choice!</span>;
+        addNotification('🎉 Hacker Mode Activated!', 'success');
         break;
       case '':
         return;
@@ -190,7 +191,7 @@ EXPERIENCE
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     playKeySound();
-    
+
     if (e.key === 'Enter') {
       handleCommand(input);
       setInput('');
@@ -224,14 +225,14 @@ EXPERIENCE
       {/* Welcome Message */}
       <div className="mb-4">
         <p style={{ color: currentTheme.accent }}>Welcome to Ubuntu Portfolio Terminal</p>
-        <p className="opacity-70">Type 'help' for available commands.</p>
+        <p className="opacity-70">Type <strong style={{ color: currentTheme.accent }}> 'help' </strong> for available commands.</p>
       </div>
 
       {/* Command History */}
       {history.map((item, index) => (
         <div key={index} className="mb-2">
           <div className="flex items-center gap-2">
-            <span style={{ color: currentTheme.terminalPrompt }}>developer@portfolio</span>
+            <span style={{ color: currentTheme.terminalPrompt }}>Mohamed@portfolio</span>
             <span className="opacity-70">:</span>
             <span style={{ color: '#5C94CE' }}>~</span>
             <span className="opacity-70">$</span>
@@ -243,7 +244,7 @@ EXPERIENCE
 
       {/* Input Line */}
       <div className="flex items-center gap-2">
-        <span style={{ color: currentTheme.terminalPrompt }}>developer@portfolio</span>
+        <span style={{ color: currentTheme.terminalPrompt }}>Mohamed@portfolio</span>
         <span className="opacity-70">:</span>
         <span style={{ color: '#5C94CE' }}>~</span>
         <span className="opacity-70">$</span>

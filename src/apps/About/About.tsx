@@ -26,7 +26,7 @@ const About = () => {
             />
           </div>
           <div className="text-center sm:text-left">
-            <h1 className="text-3xl font-bold mb-2">John Developer</h1>
+            <h1 className="text-3xl font-bold mb-2">Mohamed El Ouardi</h1>
             <p
               className="text-xl mb-3"
               style={{ color: currentTheme.accent }}
@@ -36,11 +36,11 @@ const About = () => {
             <div className="flex items-center justify-center sm:justify-start gap-4 text-sm opacity-70">
               <span className="flex items-center gap-1">
                 <FiMapPin className="w-4 h-4" />
-                San Francisco, CA
+                Sousse, Tunisia
               </span>
               <span className="flex items-center gap-1">
                 <FiCalendar className="w-4 h-4" />
-                5+ years exp
+                3+ years exp
               </span>
             </div>
           </div>
@@ -69,8 +69,8 @@ const About = () => {
         {/* Quick Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           {[
-            { label: 'Projects', value: '50+' },
-            { label: 'Clients', value: '30+' },
+            { label: 'Projects', value: '30+' },
+            { label: 'Clients', value: '10+' },
             { label: 'Commits', value: '1000+' },
           ].map((stat) => (
             <div
