@@ -1,5 +1,6 @@
 import { useAppStore } from '@/stores/useAppStore';
 import { themes } from '@/styles/themes';
+import { ShoppingCart, Wrench, Monitor, Laptop } from 'lucide-react';
 
 const BrowserHome = ({ onNavigate }) => {
     const theme = useAppStore((state) => state.theme);
@@ -8,23 +9,23 @@ const BrowserHome = ({ onNavigate }) => {
     const projects = [
         {
             title: 'E-Commerce Platform',
-            url: 'https://github.com/mohamedwardi068/swoo',
-            icon: '🛒',
+            url: 'https://swoo.vercel.app/',
+            icon: ShoppingCart,
         },
         {
-            title: 'Bus Management App',
-            url: 'https://github.com/mohamedwardi068/BusAtelierDeploy',
-            icon: '📋',
+            title: 'AutoRepair Manager',
+            url: 'https://mohamedwardi068.github.io/BusAtelierDeploy/',
+            icon: Wrench,
         },
         {
-            title: 'AI Chat Interface',
-            url: 'https://github.com/mohamedwardi068/ai-chat',
-            icon: '🤖',
+            title: 'ShowRoom - Electronics Accessories',
+            url: 'https://mohamedwardi068.github.io/ShowRoomDeploy/',
+            icon: Monitor,
         },
         {
             title: 'Portfolio OS',
-            url: 'https://github.com/mohamedwardi068/portfolio',
-            icon: '💻',
+            url: 'https://mohamedwardi068.github.io/portfolio/',
+            icon: Laptop,
         },
     ];
 
@@ -60,10 +61,10 @@ const BrowserHome = ({ onNavigate }) => {
                             >
                                 <div className="flex items-center gap-4">
                                     <div
-                                        className="text-4xl p-3 rounded-lg"
+                                        className="text-4xl p-3 rounded-lg flex items-center justify-center"
                                         style={{ backgroundColor: `${currentTheme.accent}25` }}
                                     >
-                                        {project.icon}
+                                        <project.icon className="w-8 h-8" />
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-lg mb-1">{project.title}</h3>

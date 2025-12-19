@@ -6,7 +6,7 @@ import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiSend } fr
 const Contact = () => {
   const { theme, addNotification } = useAppStore();
   const currentTheme = themes[theme];
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,15 +20,14 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: FiMail, label: 'Email', value: 'developer@example.com', href: 'mailto:developer@example.com' },
-    { icon: FiPhone, label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-    { icon: FiMapPin, label: 'Location', value: 'San Francisco, CA', href: '#' },
+    { icon: FiMail, label: 'Email', value: 'mohamedwardi068@gmail.com', href: 'mailto:mohamedwardi068@gmail.com' },
+    { icon: FiPhone, label: 'Phone', value: '+216 21238777', href: 'tel:+21621238777' },
+    { icon: FiMapPin, label: 'Location', value: 'Sousse, Tunisia', href: '#' },
   ];
 
   const socialLinks = [
-    { icon: FiGithub, label: 'GitHub', href: 'https://github.com' },
-    { icon: FiLinkedin, label: 'LinkedIn', href: 'https://linkedin.com' },
-    { icon: FiTwitter, label: 'Twitter', href: 'https://twitter.com' },
+    { icon: FiGithub, label: 'GitHub', href: 'https://github.com/mohamedwardi068' },
+    { icon: FiLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/mohamedwardi068' },
   ];
 
   return (
@@ -37,7 +36,7 @@ const Contact = () => {
       style={{ color: currentTheme.textPrimary }}
     >
       <h1 className="text-2xl font-bold mb-6">Get in Touch</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Info */}
         <div>
