@@ -49,13 +49,13 @@ const TopBar = () => {
       style={{ backgroundColor: currentTheme.panelBg }}
     >
       <div className="flex items-center gap-4">
-        <span 
+        <span
           className="font-semibold text-sm"
           style={{ color: currentTheme.textPrimary }}
         >
           Activities
         </span>
-        <span 
+        <span
           className="text-sm"
           style={{ color: currentTheme.textPrimary }}
         >
@@ -63,7 +63,7 @@ const TopBar = () => {
         </span>
       </div>
 
-      <div 
+      <div
         className="flex items-center gap-1 text-sm"
         style={{ color: currentTheme.textPrimary }}
       >
@@ -72,23 +72,23 @@ const TopBar = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        <FiWifi 
-          className="w-4 h-4" 
+        <FiWifi
+          className="w-4 h-4"
           style={{ color: currentTheme.textPrimary }}
         />
-        <FiVolume2 
-          className="w-4 h-4" 
+        <FiVolume2
+          className="w-4 h-4"
           style={{ color: currentTheme.textPrimary }}
         />
-        <FiBattery 
-          className="w-4 h-4" 
+        <FiBattery
+          className="w-4 h-4"
           style={{ color: currentTheme.textPrimary }}
         />
-        <div 
+        <div
           className="flex items-center gap-1 cursor-pointer hover:opacity-80"
           style={{ color: currentTheme.textPrimary }}
         >
-          <span className="text-sm">User</span>
+          <span className="text-sm">Mohamed</span>
           <FiChevronDown className="w-3 h-3" />
         </div>
       </div>

@@ -146,8 +146,8 @@ DEVELOPER RESUME
 ================
 
 Full-Stack Developer
-Email: developer@example.com
-GitHub: github.com/developer
+Email: Mohamed.ouardi@isitc.u-sousse.tn
+GitHub: github.com/mohamedwardi068
 
 SKILLS
 ------

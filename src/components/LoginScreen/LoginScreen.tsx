@@ -40,7 +40,7 @@ const LoginScreen = () => {
         </div>
 
         {/* Username */}
-        <h2 className="text-white text-2xl font-light mb-8">Developer</h2>
+        <h2 className="text-white text-2xl font-light mb-8">Mohamed</h2>
 
         {/* Password Form */}
         <motion.form
