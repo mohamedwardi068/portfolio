@@ -1,6 +1,6 @@
 import { useAppStore } from '@/stores/useAppStore';
 import { themes } from '@/styles/themes';
-import { ShoppingCart, Wrench, Monitor, Laptop } from 'lucide-react';
+import { ShoppingCart, Wrench, Monitor, Laptop, CreditCard } from 'lucide-react';
 
 const BrowserHome = ({ onNavigate }) => {
     const theme = useAppStore((state) => state.theme);
@@ -23,9 +23,9 @@ const BrowserHome = ({ onNavigate }) => {
             icon: Monitor,
         },
         {
-            title: 'Portfolio OS',
-            url: 'https://mohamedwardi068.github.io/portfolio/',
-            icon: Laptop,
+            title: 'Payment Checkout System',
+            url: 'https://payment-five-mocha.vercel.app/',
+            icon: CreditCard,
         },
     ];
 

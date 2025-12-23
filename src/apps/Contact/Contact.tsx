@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAppStore } from '@/stores/useAppStore';
 import { themes } from '@/styles/themes';
-import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiSend } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  const { theme, addNotification } = useAppStore();
+  const { theme } = useAppStore();
   const currentTheme = themes[theme];
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -13,10 +15,33 @@ const Contact = () => {
     message: '',
   });
 
+  const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-    setFormData({ name: '', email: '', message: '' });
+    if (!formRef.current) return;
+
+    setIsSending(true);
+    setStatus(null);
+
+    emailjs.sendForm(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      formRef.current,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+      .then(() => {
+        setStatus({ type: 'success', text: 'Message sent successfully! I\'ll get back to you soon.' });
+        setFormData({ name: '', email: '', message: '' });
+      })
+      .catch((error) => {
+        console.error('EmailJS Error:', error);
+        setStatus({ type: 'error', text: 'Failed to send message. Please try again later.' });
+      })
+      .finally(() => {
+        setIsSending(false);
+      });
   };
 
   const contactInfo = [
@@ -85,10 +110,12 @@ const Contact = () => {
         {/* Contact Form */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Send a Message</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm opacity-70 mb-1">Name</label>
+              <label className="block text-sm opacity-70 mb-1" htmlFor="user_name">Name</label>
               <input
+                id="user_name"
+                name="user_name"
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -103,8 +130,10 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label className="block text-sm opacity-70 mb-1">Email</label>
+              <label className="block text-sm opacity-70 mb-1" htmlFor="user_email">Email</label>
               <input
+                id="user_email"
+                name="user_email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -119,8 +148,10 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label className="block text-sm opacity-70 mb-1">Message</label>
+              <label className="block text-sm opacity-70 mb-1" htmlFor="message">Message</label>
               <textarea
+                id="message"
+                name="message"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-4 py-2 rounded-lg outline-none transition-colors resize-none"
@@ -134,16 +165,29 @@ const Contact = () => {
                 required
               />
             </div>
+
+            {status && (
+              <div
+                className={`p-3 rounded-lg text-sm ${status.type === 'success' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}
+                style={{
+                  border: `1px solid ${status.type === 'success' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`
+                }}
+              >
+                {status.text}
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors hover:opacity-90"
+              disabled={isSending}
+              className={`w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors ${isSending ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
               style={{
                 backgroundColor: currentTheme.accent,
                 color: '#FFFFFF',
               }}
             >
-              <FiSend className="w-4 h-4" />
-              Send Message
+              <FiSend className={`w-4 h-4 ${isSending ? 'animate-pulse' : ''}`} />
+              {isSending ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>

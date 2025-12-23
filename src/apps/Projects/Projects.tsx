@@ -2,7 +2,7 @@ import { useAppStore } from '@/stores/useAppStore';
 import { useBrowserStore } from '@/stores/useBrowserStore';
 import { themes } from '@/styles/themes';
 import { ComponentType } from 'react'; // Added to avoid potential type errors if needed, but mainly for the icons below
-import { ShoppingCart, Wrench, Monitor, Laptop, CloudSun, FileCode, Star, Github, ExternalLink } from 'lucide-react';
+import { ShoppingCart, Wrench, Monitor, Laptop, CloudSun, FileCode, Star, Github, ExternalLink, CreditCard } from 'lucide-react';
 
 const projects = [
   {
@@ -44,6 +44,16 @@ const projects = [
     image: Laptop,
     githubUrl: 'https://github.com/mohamedwardi068/portfolio',
     demoUrl: 'https://mohamedwardi068.github.io/portfolio/',
+  },
+  {
+    id: 5,
+    title: 'Payment Checkout System — MERN Portfolio Project',
+    description: 'Full-stack checkout and payment system with MERN. Features secure backend validation, mock Stripe-like architecture, and cart persistence.',
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'TailwindCSS'],
+    stars: 175,
+    image: CreditCard,
+    githubUrl: 'https://github.com/mohamedwardi068/Payment',
+    demoUrl: 'https://payment-five-mocha.vercel.app/',
   },
 ];
 
