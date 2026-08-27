@@ -45,7 +45,7 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
   };
 
   const windowStyle = window.isMaximized
-    ? { x: 0, y: 0, width: '100%', height: 'calc(100vh - 32px)' }
+    ? { x: 0, y: 0, width: '100%', height: 'calc(100vh - 2rem)' }
     : {
         x: window.position.x,
         y: window.position.y,
@@ -60,7 +60,7 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
         position={window.isMaximized ? { x: 0, y: 0 } : window.position}
         size={
           window.isMaximized
-            ? { width: '100%', height: 'calc(100vh - 32px)' }
+            ? { width: '100%', height: 'calc(100vh - 2rem)' }
             : window.size
         }
         onDragStop={(e, d) => {
@@ -78,8 +78,8 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
           }
         }}
         dragHandleClassName="window-drag-handle"
-        minWidth={400}
-        minHeight={300}
+        minWidth={440}
+        minHeight={330}
         bounds="parent"
         style={{ zIndex: window.zIndex }}
         disableDragging={window.isMaximized}

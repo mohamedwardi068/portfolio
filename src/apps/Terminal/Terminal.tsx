@@ -78,12 +78,16 @@ const Terminal = () => {
 
   const getProjectsText = () => (
     <div className="space-y-2">
-      <p style={{ color: currentTheme.accent }}>📁 Projects:</p>
-      <p className="pl-4">• E-Commerce Platform - Full-stack shopping experience</p>
-      <p className="pl-4">• Task Management App - Real-time collaboration tool</p>
-      <p className="pl-4">• AI Chat Interface - OpenAI-powered chatbot</p>
-      <p className="pl-4">• Portfolio OS - This Ubuntu-style portfolio!</p>
-      <p className="mt-2 text-sm opacity-70">Type 'projects' to open the Projects app for more details.</p>
+      <p style={{ color: currentTheme.accent }}>📁 Featured Projects (Sorted Newest):</p>
+      <p className="pl-4">• <span className="text-yellow-400 font-bold">[NEW]</span> NovaSon - Premium Audio & Tech Accessories E-Commerce (React 19, Tailwind v4)</p>
+      <p className="pl-4">• <span className="text-yellow-400 font-bold">[NEW]</span> EstateAI - Real Estate Platform with Leaflet Maps & Search (React, TS, Framer Motion)</p>
+      <p className="pl-4">• <span className="text-yellow-400 font-bold">[NEW]</span> GymBot - AI Fitness & Nutrition Coach (Gemini 2.5 Flash, MERN, JWT)</p>
+      <p className="pl-4">• <span className="text-yellow-400 font-bold">[NEW]</span> SaaS Analytics Dashboard - B2B Metrics & MRR with raw CSS Grid & React</p>
+      <p className="pl-4">• <span className="text-yellow-400 font-bold">[NEW]</span> Project Management System - Agile Full-Stack Kanban Board (MERN, Context API)</p>
+      <p className="pl-4">• E-Commerce Platform (Swoo) - Full-stack MERN shopping solution</p>
+      <p className="pl-4">• AutoRepair Manager - Workshop & vehicle management system</p>
+      <p className="pl-4">• Portfolio OS - This interactive desktop simulator</p>
+      <p className="mt-2 text-sm opacity-70">Type 'projects' to open the Projects app for full details & interactive links.</p>
     </div>
   );
 

@@ -47,19 +47,19 @@ const defaultWindowState = (id: AppId): WindowState => ({
   isMaximized: false,
   zIndex: 1,
   position: { x: 100 + Math.random() * 100, y: 50 + Math.random() * 50 },
-  size: { width: 700, height: 500 },
+  size: { width: 770, height: 550 },
 });
 
 export const useAppStore = create<AppState>((set, get) => ({
   windows: {
     terminal: defaultWindowState('terminal'),
-    about: { ...defaultWindowState('about'), size: { width: 1000, height: 800 } },
-    projects: { ...defaultWindowState('projects'), size: { width: 1000, height: 800 } },
-    skills: { ...defaultWindowState('skills'), size: { width: 1000, height: 800 } },
-    contact: { ...defaultWindowState('contact'), size: { width: 1000, height: 800 } },
-    files: { ...defaultWindowState('files'), size: { width: 1000, height: 800 } },
-    settings: { ...defaultWindowState('settings'), size: { width: 1000, height: 800 } },
-    browser: { ...defaultWindowState('browser'), size: { width: 1000, height: 800 } },
+    about: { ...defaultWindowState('about'), size: { width: 1100, height: 880 } },
+    projects: { ...defaultWindowState('projects'), size: { width: 1100, height: 880 } },
+    skills: { ...defaultWindowState('skills'), size: { width: 1100, height: 880 } },
+    contact: { ...defaultWindowState('contact'), size: { width: 1100, height: 880 } },
+    files: { ...defaultWindowState('files'), size: { width: 1100, height: 880 } },
+    settings: { ...defaultWindowState('settings'), size: { width: 1100, height: 880 } },
+    browser: { ...defaultWindowState('browser'), size: { width: 1100, height: 880 } },
   },
   activeWindow: null,
   highestZIndex: 1,

@@ -25,7 +25,7 @@ const BrowserWindow = () => {
     const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
     const canEmbed = (url) => {
-        const restrictedDomains = ['github.com', 'linkedin.com', 'twitter.com', 'x.com'];
+        const restrictedDomains = ['github.com', 'linkedin.com', 'lnkd.in', 'twitter.com', 'x.com'];
         try {
             const hostname = new URL(url).hostname;
             return !restrictedDomains.some(domain => hostname.includes(domain));

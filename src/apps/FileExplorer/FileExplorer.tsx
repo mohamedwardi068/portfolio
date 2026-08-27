@@ -35,9 +35,24 @@ const fileSystem: FileItem[] = [
     type: 'folder',
     icon: FiFolder,
     children: [
-      { name: 'e-commerce/', type: 'folder', icon: FiFolder, children: [] },
-      { name: 'portfolio/', type: 'folder', icon: FiFolder, children: [] },
-      { name: 'README.md', type: 'file', icon: FiFileText, content: 'Project documentation' },
+      { name: 'novason/', type: 'folder', icon: FiFolder, children: [
+        { name: 'README.md', type: 'file', icon: FiFileText, content: 'NovaSon: Audio & Tech Accessories E-Commerce Experience with React 19 & Tailwind CSS v4' }
+      ] },
+      { name: 'estate-ai/', type: 'folder', icon: FiFolder, children: [
+        { name: 'README.md', type: 'file', icon: FiFileText, content: 'EstateAI: Real estate platform with Leaflet interactive maps and Framer Motion' }
+      ] },
+      { name: 'gymbot-ai/', type: 'folder', icon: FiFolder, children: [
+        { name: 'README.md', type: 'file', icon: FiFileText, content: 'GymBot: AI-powered full-stack fitness & nutrition coach powered by Google Gemini 2.5 Flash API' }
+      ] },
+      { name: 'saas-analytics/', type: 'folder', icon: FiFolder, children: [
+        { name: 'README.md', type: 'file', icon: FiFileText, content: 'SaaS Analytics Dashboard: Enterprise metrics & charts built with React, TypeScript and raw CSS Grid' }
+      ] },
+      { name: 'project-management/', type: 'folder', icon: FiFolder, children: [
+        { name: 'README.md', type: 'file', icon: FiFileText, content: 'Project Management System: Full-stack Jira/Trello-inspired Kanban board with REST API' }
+      ] },
+      { name: 'e-commerce-swoo/', type: 'folder', icon: FiFolder, children: [] },
+      { name: 'portfolio-os/', type: 'folder', icon: FiFolder, children: [] },
+      { name: 'README.md', type: 'file', icon: FiFileText, content: 'Collection of featured full-stack, AI, and frontend engineering projects by Mohamed.' },
     ],
   },
   {
