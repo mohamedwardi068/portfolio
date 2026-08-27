@@ -10,6 +10,8 @@ import {
     Wrench, 
     Monitor, 
     CreditCard,
+    Smartphone,
+    Laptop,
     Sparkles 
 } from 'lucide-react';
 
@@ -18,6 +20,20 @@ const BrowserHome = ({ onNavigate }) => {
     const currentTheme = themes[theme];
 
     const projects = [
+        {
+            title: 'Portfolio OS — Workstation Experience',
+            subtitle: 'Interactive Linux Desktop Simulator',
+            url: 'https://grand-queijadas-012417.netlify.app/',
+            icon: Laptop,
+            isNew: true,
+        },
+        {
+            title: 'Bus Brake Calipers Management Platform',
+            subtitle: 'Graduation Project • BUS SOFTWARE',
+            url: 'https://res.cloudinary.com/dthb3ojqm/video/upload/v1785406770/DEMO_xieh28.mp4',
+            icon: Smartphone,
+            isNew: true,
+        },
         {
             title: 'NovaSon — Audio & Tech E-Commerce',
             subtitle: 'React 19 & Tailwind v4 E-Commerce',

@@ -29,7 +29,12 @@ import {
   Mic,
   Activity,
   Maximize2,
-  Volume2
+  Volume2,
+  Terminal,
+  Laptop,
+  Layout,
+  Sliders,
+  Monitor
 } from 'lucide-react';
 import { downloadProjectDocumentation } from '@/lib/downloadResume';
 
@@ -65,7 +70,7 @@ export interface ProjectDetail {
   association?: string;
   isGraduationProject?: boolean;
   isNew?: boolean;
-  mockupType?: 'bus-caliper' | 'ecommerce' | 'realestate' | 'ai-bot' | 'dashboard' | 'kanban' | 'generic';
+  mockupType?: 'bus-caliper' | 'ecommerce' | 'realestate' | 'ai-bot' | 'dashboard' | 'kanban' | 'portfolio-os' | 'generic';
 }
 
 interface ProjectDetailsModalProps {
@@ -268,6 +273,151 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
               <span>🔥 Streak: 14 Days</span>
               <span>🥗 Protein: 170g / 170g (100%)</span>
               <span className="text-green-400 font-bold">Next: Rest Timer 90s</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (type === 'portfolio-os') {
+      return (
+        <div className="w-full bg-[#141414] rounded-xl border border-white/10 p-3 sm:p-4 text-xs font-sans space-y-3">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2 text-[11px]">
+            <span className="font-bold text-orange-400 flex items-center gap-1.5">
+              <Laptop className="w-3.5 h-3.5" />
+              Portfolio OS — Draggable Linux Developer Workstation Simulation
+            </span>
+            <span className="text-green-400 font-mono text-[10px] flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              Ubuntu 24.04 Simulator
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+            {/* Left mini dock & quick stats */}
+            <div className="sm:col-span-4 bg-[#1C1B1B] p-3 rounded-lg border border-white/10 space-y-2">
+              <div className="text-[11px] font-bold text-neutral-300 flex items-center justify-between">
+                <span>⚡ Workstation Core</span>
+                <span className="text-orange-400 font-mono text-[10px]">60 FPS</span>
+              </div>
+              <div className="space-y-1.5 text-[10px] font-mono text-neutral-300">
+                <div className="flex justify-between p-1.5 rounded bg-black/40 border border-white/5">
+                  <span>Engine:</span>
+                  <span className="text-white font-semibold">React 18 + Zustand</span>
+                </div>
+                <div className="flex justify-between p-1.5 rounded bg-black/40 border border-white/5">
+                  <span>Motion:</span>
+                  <span className="text-white font-semibold">Framer Motion v12</span>
+                </div>
+                <div className="flex justify-between p-1.5 rounded bg-black/40 border border-white/5">
+                  <span>Audio Synth:</span>
+                  <span className="text-green-400 font-semibold">Web Audio API</span>
+                </div>
+                <div className="flex justify-between p-1.5 rounded bg-black/40 border border-white/5">
+                  <span>Launcher:</span>
+                  <span className="text-orange-300 font-semibold">Ctrl + K</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right mini desktop simulation */}
+            <div className="sm:col-span-8 bg-[#1C1B1B] p-3 rounded-lg border border-white/10 space-y-2">
+              <div className="flex items-center justify-between text-[11px] font-bold text-neutral-300">
+                <span className="flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-orange-400" />
+                  Terminal & Window Manager
+                </span>
+                <span className="text-neutral-400 font-mono text-[10px]">z-Index Stacking: Active</span>
+              </div>
+
+              {/* Mini Terminal Window */}
+              <div className="rounded-lg bg-black/80 border border-white/10 p-2.5 font-mono text-[10px] space-y-1">
+                <div className="flex items-center justify-between mb-1 pb-1 border-b border-white/10">
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 rounded-full bg-red-500/80" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
+                    <div className="w-2 h-2 rounded-full bg-green-500/80" />
+                    <span className="text-[9px] text-neutral-400 ml-1">mohamed@workstation:~</span>
+                  </div>
+                  <span className="text-[9px] text-orange-400/80">bash 5.2</span>
+                </div>
+                <p className="text-green-400 font-bold">mohamed@workstation:~$ <span className="text-white">neofetch</span></p>
+                <p className="text-neutral-300">OS: <span className="text-orange-400">PortfolioOS x86_64</span></p>
+                <p className="text-neutral-300">Host: <span className="text-white">Mohamed El Ouardi Workstation</span></p>
+                <p className="text-neutral-300">Uptime: <span className="text-green-400 font-bold">100% Available for Hire</span></p>
+                <p className="text-neutral-300">Windows: <span className="text-blue-400 font-bold">9 Active Interactive Apps</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (type === 'dashboard') {
+      return (
+        <div className="w-full bg-[#141414] rounded-xl border border-white/10 p-3 sm:p-4 text-xs font-sans space-y-3">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2 text-[11px]">
+            <span className="font-bold text-orange-400">📊 SaaS Analytics & Metrics • Pure CSS Grid</span>
+            <span className="text-green-400 font-mono text-[10px]">MRR: $48,250 (+14.8%)</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px] font-mono">
+            <div className="p-2.5 rounded bg-[#1C1B1B] border border-white/10">
+              <span className="text-neutral-400 block text-[9px]">ARR Forecast</span>
+              <span className="text-white font-bold text-xs">$579,000</span>
+              <span className="text-green-400 block text-[9px] mt-0.5">↑ 22% vs Q3</span>
+            </div>
+            <div className="p-2.5 rounded bg-[#1C1B1B] border border-white/10">
+              <span className="text-neutral-400 block text-[9px]">Active Subscriptions</span>
+              <span className="text-white font-bold text-xs">1,248 Orgs</span>
+              <span className="text-blue-400 block text-[9px] mt-0.5">99.4% Uptime</span>
+            </div>
+            <div className="p-2.5 rounded bg-[#1C1B1B] border border-white/10">
+              <span className="text-neutral-400 block text-[9px]">Net Churn Rate</span>
+              <span className="text-white font-bold text-xs">1.18%</span>
+              <span className="text-green-400 block text-[9px] mt-0.5">↓ 0.4% MoM</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (type === 'kanban') {
+      return (
+        <div className="w-full bg-[#141414] rounded-xl border border-white/10 p-3 sm:p-4 text-xs font-sans space-y-3">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2 text-[11px]">
+            <span className="font-bold text-blue-400">📋 Agile Kanban Workflow System • Drag & Drop</span>
+            <span className="text-neutral-400 font-mono text-[10px]">Sprint #14 (Active)</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-[10px]">
+            <div className="p-2 rounded bg-[#1C1B1B] border border-white/10 space-y-1.5">
+              <div className="flex justify-between font-bold text-neutral-300 text-[10px]">
+                <span>In Progress</span>
+                <span className="text-orange-400 font-mono">2</span>
+              </div>
+              <div className="p-1.5 rounded bg-black/40 border border-white/5">
+                <span className="text-white font-semibold block text-[10px]">JWT Auth Middleware</span>
+                <span className="text-[8px] text-red-300 font-mono bg-red-500/20 px-1 py-0.2 rounded">HIGH</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-[#1C1B1B] border border-white/10 space-y-1.5">
+              <div className="flex justify-between font-bold text-neutral-300 text-[10px]">
+                <span>Code Review</span>
+                <span className="text-blue-400 font-mono">1</span>
+              </div>
+              <div className="p-1.5 rounded bg-black/40 border border-white/5">
+                <span className="text-white font-semibold block text-[10px]">Payment Webhook</span>
+                <span className="text-[8px] text-blue-300 font-mono bg-blue-500/20 px-1 py-0.2 rounded">REVIEW</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-[#1C1B1B] border border-white/10 space-y-1.5">
+              <div className="flex justify-between font-bold text-neutral-300 text-[10px]">
+                <span>Done</span>
+                <span className="text-green-400 font-mono">8</span>
+              </div>
+              <div className="p-1.5 rounded bg-black/40 border border-white/5">
+                <span className="text-white font-semibold block text-[10px]">REST API Pagination</span>
+                <span className="text-[8px] text-green-300 font-mono bg-green-500/20 px-1 py-0.2 rounded">DONE</span>
+              </div>
             </div>
           </div>
         </div>

@@ -128,7 +128,7 @@ const TerminalApp: React.FC = () => {
       <p>7. SWOO E-Commerce Platform (MERN)</p>
       <p>8. AutoRepair Manager (Workshop Management)</p>
       <p>9. ShowRoom Electronics Store</p>
-      <p>10. Portfolio OS (Linux Desktop Simulator)</p>
+      <p>10. <span className="text-yellow-300 font-bold">[NEW]</span> Portfolio OS — Workstation Experience (Linux Desktop Simulator)</p>
       <p className="opacity-70 text-xs mt-1 text-orange-300">Opening Projects Window...</p>
     </div>
   );
