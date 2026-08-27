@@ -84,6 +84,16 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
     setActiveTab('media');
   }, [project?.id, project?.videoUrl, project?.imageUrl]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   if (!project) return null;
 
   const handleOpenBrowser = (url: string) => {
@@ -425,7 +435,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
   return (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-[130] flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
+        className="fixed inset-0 z-[130] flex items-start sm:items-center justify-center pt-14 sm:pt-16 pb-6 px-3 sm:px-6 bg-black/80 backdrop-blur-md overflow-y-auto"
         onClick={onClose}
       >
         <motion.div
@@ -434,7 +444,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ duration: 0.18 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-3xl max-h-[92vh] rounded-2xl shadow-2xl border overflow-hidden flex flex-col"
+          className="relative w-full max-w-3xl max-h-[calc(100vh-5rem)] rounded-2xl shadow-2xl border overflow-hidden flex flex-col my-auto"
           style={{
             backgroundColor: currentTheme.windowBg,
             borderColor: currentTheme.windowBorderFocused,
@@ -443,9 +453,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
         >
           {/* Modal Header */}
           <div
-            className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b select-none"
+            className="sticky top-0 z-20 flex items-center justify-between px-4 sm:px-6 py-3.5 border-b select-none backdrop-blur-md"
             style={{
-              backgroundColor: currentTheme.windowHeader,
+              backgroundColor: `${currentTheme.windowHeader}EE`,
               borderColor: currentTheme.cardBorder,
             }}
           >
@@ -497,10 +507,12 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ project, onCl
 
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors shrink-0"
+              className="p-2 sm:p-2.5 rounded-xl bg-white/10 hover:bg-red-500 text-white/90 hover:text-white border border-white/15 hover:border-red-500/50 transition-all shrink-0 flex items-center gap-1.5 shadow-md active:scale-95 group"
               aria-label="Close modal"
+              title="Close (Esc)"
             >
-              <X className="w-5 h-5 opacity-75 hover:opacity-100" />
+              <X className="w-5 h-5 opacity-90 group-hover:opacity-100" />
+              <span className="text-[10px] font-mono font-bold opacity-60 group-hover:opacity-100 hidden sm:inline">ESC</span>
             </button>
           </div>
 
