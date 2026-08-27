@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type AppId = 'terminal' | 'about' | 'projects' | 'skills' | 'contact' | 'files' | 'settings' | 'browser';
+export type AppId = 'terminal' | 'about' | 'projects' | 'experience' | 'skills' | 'contact' | 'files' | 'settings' | 'browser';
 
 export interface WindowState {
   id: AppId;
@@ -22,6 +22,8 @@ interface AppState {
   soundEnabled: boolean;
   isLoggedIn: boolean;
   isBooting: boolean;
+  isLauncherOpen: boolean;
+  selectedInspectorProjectId: number | null;
   notifications: { id: string; message: string; type: 'info' | 'success' | 'warning' }[];
 
   // Actions
@@ -35,47 +37,64 @@ interface AppState {
   setTheme: (theme: ThemeType) => void;
   toggleSound: () => void;
   login: () => void;
+  quickLaunchRecruiter: (targetApp?: AppId) => void;
   finishBooting: () => void;
+  openLauncher: () => void;
+  closeLauncher: () => void;
+  toggleLauncher: () => void;
+  openProjectInspector: (projectId: number) => void;
+  closeProjectInspector: () => void;
   addNotification: (message: string, type?: 'info' | 'success' | 'warning') => void;
   removeNotification: (id: string) => void;
 }
 
-const defaultWindowState = (id: AppId): WindowState => ({
-  id,
-  isOpen: false,
-  isMinimized: false,
-  isMaximized: false,
-  zIndex: 1,
-  position: { x: 100 + Math.random() * 100, y: 50 + Math.random() * 50 },
-  size: { width: 770, height: 550 },
-});
+const defaultWindowState = (id: AppId, custom?: Partial<WindowState>): WindowState => {
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  const defaultWidth = isMobile ? window.innerWidth - 16 : 940;
+  const defaultHeight = isMobile ? window.innerHeight - 80 : 640;
+
+  return {
+    id,
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: isMobile,
+    zIndex: 1,
+    position: { x: isMobile ? 8 : 80 + Math.random() * 40, y: isMobile ? 36 : 45 + Math.random() * 30 },
+    size: { width: defaultWidth, height: defaultHeight },
+    ...custom,
+  };
+};
 
 export const useAppStore = create<AppState>((set, get) => ({
   windows: {
-    terminal: defaultWindowState('terminal'),
-    about: { ...defaultWindowState('about'), size: { width: 1100, height: 880 } },
-    projects: { ...defaultWindowState('projects'), size: { width: 1100, height: 880 } },
-    skills: { ...defaultWindowState('skills'), size: { width: 1100, height: 880 } },
-    contact: { ...defaultWindowState('contact'), size: { width: 1100, height: 880 } },
-    files: { ...defaultWindowState('files'), size: { width: 1100, height: 880 } },
-    settings: { ...defaultWindowState('settings'), size: { width: 1100, height: 880 } },
-    browser: { ...defaultWindowState('browser'), size: { width: 1100, height: 880 } },
+    terminal: defaultWindowState('terminal', { size: { width: 840, height: 540 } }),
+    about: defaultWindowState('about', { size: { width: 980, height: 680 } }),
+    projects: defaultWindowState('projects', { size: { width: 1040, height: 720 }, isOpen: false }),
+    experience: defaultWindowState('experience', { size: { width: 960, height: 660 } }),
+    skills: defaultWindowState('skills', { size: { width: 980, height: 680 } }),
+    contact: defaultWindowState('contact', { size: { width: 920, height: 640 } }),
+    files: defaultWindowState('files', { size: { width: 960, height: 620 } }),
+    settings: defaultWindowState('settings', { size: { width: 820, height: 580 } }),
+    browser: defaultWindowState('browser', { size: { width: 1020, height: 700 } }),
   },
   activeWindow: null,
-  highestZIndex: 1,
+  highestZIndex: 10,
   theme: 'ubuntu',
   soundEnabled: true,
   isLoggedIn: false,
   isBooting: true,
+  isLauncherOpen: false,
+  selectedInspectorProjectId: null,
   notifications: [],
 
   openWindow: (id) => {
-    const { highestZIndex } = get();
+    const { highestZIndex, windows } = get();
+    const currentWin = windows[id];
     set((state) => ({
       windows: {
         ...state.windows,
         [id]: {
-          ...state.windows[id],
+          ...currentWin,
           isOpen: true,
           isMinimized: false,
           zIndex: highestZIndex + 1,
@@ -83,6 +102,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       },
       activeWindow: id,
       highestZIndex: highestZIndex + 1,
+      isLauncherOpen: false,
     }));
   },
 
@@ -128,7 +148,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   focusWindow: (id) => {
     const { highestZIndex, windows } = get();
-    if (!windows[id].isOpen || windows[id].isMinimized) return;
+    if (!windows[id] || !windows[id].isOpen || windows[id].isMinimized) return;
 
     set((state) => ({
       windows: {
@@ -170,19 +190,50 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setTheme: (theme) => {
     set({ theme });
-    get().addNotification(`Theme changed to ${theme}`, 'success');
+    get().addNotification(`Theme switched to ${theme.toUpperCase()}`, 'info');
   },
 
   toggleSound: () => {
-    set((state) => ({ soundEnabled: !state.soundEnabled }));
+    set((state) => {
+      const nextSound = !state.soundEnabled;
+      return { soundEnabled: nextSound };
+    });
   },
 
   login: () => {
-    set({ isLoggedIn: true });
+    set({ isLoggedIn: true, isBooting: false });
+    // Open Projects and About windows by default for instant delight
+    get().openWindow('projects');
+  },
+
+  quickLaunchRecruiter: (targetApp: AppId = 'projects') => {
+    set({ isLoggedIn: true, isBooting: false, isLauncherOpen: false });
+    get().openWindow(targetApp);
+    get().addNotification(' Quick Launch: Developer Workstation Ready', 'success');
   },
 
   finishBooting: () => {
     set({ isBooting: false });
+  },
+
+  openLauncher: () => {
+    set({ isLauncherOpen: true });
+  },
+
+  closeLauncher: () => {
+    set({ isLauncherOpen: false });
+  },
+
+  toggleLauncher: () => {
+    set((state) => ({ isLauncherOpen: !state.isLauncherOpen }));
+  },
+
+  openProjectInspector: (projectId: number) => {
+    set({ selectedInspectorProjectId: projectId });
+  },
+
+  closeProjectInspector: () => {
+    set({ selectedInspectorProjectId: null });
   },
 
   addNotification: (message, type = 'info') => {
@@ -201,3 +252,4 @@ export const useAppStore = create<AppState>((set, get) => ({
     }));
   },
 }));
+

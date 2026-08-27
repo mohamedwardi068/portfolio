@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore, AppId } from '@/stores/useAppStore';
 import { themes } from '@/styles/themes';
-import { FiX, FiMinus, FiMaximize2 } from 'react-icons/fi';
+import { X, Minus, Square, Copy } from 'lucide-react';
 
 interface UbuntuWindowProps {
   appId: AppId;
@@ -11,9 +11,10 @@ interface UbuntuWindowProps {
   children: React.ReactNode;
 }
 
-const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
+const UbuntuWindow: React.FC<UbuntuWindowProps> = ({ appId, title, children }) => {
   const {
     windows,
+    activeWindow,
     theme,
     closeWindow,
     minimizeWindow,
@@ -23,11 +24,26 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
     updateWindowSize,
   } = useAppStore();
 
-  const window = windows[appId];
+  const windowState = windows[appId];
   const currentTheme = themes[theme];
   const rndRef = useRef<Rnd>(null);
 
-  if (window.isMinimized) return null;
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!windowState || !windowState.isOpen || windowState.isMinimized) return null;
+
+  const isFocused = activeWindow === appId;
+  const isMaximized = windowState.isMaximized || isMobile;
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,92 +60,129 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
     maximizeWindow(appId);
   };
 
-  const windowStyle = window.isMaximized
-    ? { x: 0, y: 0, width: '100%', height: 'calc(100vh - 2rem)' }
-    : {
-        x: window.position.x,
-        y: window.position.y,
-        width: window.size.width,
-        height: window.size.height,
-      };
-
   return (
     <AnimatePresence>
       <Rnd
         ref={rndRef}
-        position={window.isMaximized ? { x: 0, y: 0 } : window.position}
+        position={isMaximized ? { x: 0, y: 0 } : windowState.position}
         size={
-          window.isMaximized
-            ? { width: '100%', height: 'calc(100vh - 2rem)' }
-            : window.size
+          isMaximized
+            ? {
+                width: isMobile ? '100vw' : 'calc(100vw - 4rem)',
+                height: isMobile ? 'calc(100vh - 6rem)' : 'calc(100vh - 2.5rem)',
+              }
+            : windowState.size
         }
         onDragStop={(e, d) => {
-          if (!window.isMaximized) {
-            updateWindowPosition(appId, { x: d.x, y: d.y });
+          if (!isMaximized) {
+            updateWindowPosition(appId, { x: Math.max(0, d.x), y: Math.max(0, d.y) });
           }
         }}
         onResizeStop={(e, dir, ref, delta, position) => {
-          if (!window.isMaximized) {
+          if (!isMaximized) {
             updateWindowSize(appId, {
-              width: parseInt(ref.style.width),
-              height: parseInt(ref.style.height),
+              width: parseInt(ref.style.width, 10),
+              height: parseInt(ref.style.height, 10),
             });
             updateWindowPosition(appId, position);
           }
         }}
-        dragHandleClassName="window-drag-handle"
-        minWidth={440}
-        minHeight={330}
+        dragHandleClassName="ubuntu-window-drag-handle"
+        minWidth={isMobile ? 320 : 480}
+        minHeight={isMobile ? 300 : 360}
         bounds="parent"
-        style={{ zIndex: window.zIndex }}
-        disableDragging={window.isMaximized}
-        enableResizing={!window.isMaximized}
+        style={{ zIndex: windowState.zIndex }}
+        disableDragging={isMaximized}
+        enableResizing={!isMaximized}
         onMouseDown={() => focusWindow(appId)}
+        onTouchStart={() => focusWindow(appId)}
+        className="touch-none"
       >
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ duration: 0.15 }}
-          className="w-full h-full rounded-xl overflow-hidden shadow-2xl flex flex-col"
-          style={{ backgroundColor: currentTheme.windowBg }}
+          initial={{ opacity: 0, scale: 0.97, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.97, y: 8 }}
+          transition={{ duration: 0.16, ease: 'easeOut' }}
+          className={`w-full h-full rounded-none md:rounded-2xl overflow-hidden flex flex-col transition-shadow duration-200 ${
+            isFocused ? 'shadow-2xl' : 'shadow-lg opacity-95'
+          }`}
+          style={{
+            backgroundColor: currentTheme.windowBg,
+            border: isMobile
+              ? 'none'
+              : `1px solid ${isFocused ? currentTheme.windowBorderFocused : currentTheme.windowBorder}`,
+            boxShadow: isFocused
+              ? `0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 15px ${currentTheme.accentGlow}`
+              : '0 10px 30px -5px rgba(0, 0, 0, 0.5)',
+          }}
         >
-          {/* Title Bar */}
+          {/* Ubuntu Style Window Header */}
           <div
-            className="window-drag-handle h-10 flex items-center justify-between px-4 cursor-move"
-            style={{ backgroundColor: currentTheme.windowHeader }}
+            onDoubleClick={handleMaximize}
+            className="ubuntu-window-drag-handle h-9 sm:h-10 flex items-center justify-between px-3 sm:px-4 select-none cursor-move shrink-0 border-b transition-colors"
+            style={{
+              backgroundColor: isFocused ? currentTheme.windowHeader : `${currentTheme.windowHeader}CC`,
+              borderColor: currentTheme.cardBorder,
+            }}
           >
+            {/* Window Traffic Light Controls (Ubuntu Left / Classic style) */}
             <div className="flex items-center gap-2">
               <button
                 onClick={handleClose}
-                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group"
+                className="w-3.5 h-3.5 rounded-full bg-[#E95420] hover:bg-[#FF3800] transition-transform active:scale-90 flex items-center justify-center group"
+                title="Close"
+                aria-label="Close"
               >
-                <FiX className="w-2 h-2 text-red-900 opacity-0 group-hover:opacity-100" />
+                <X className="w-2.5 h-2.5 text-black/80 opacity-0 group-hover:opacity-100 transition-opacity stroke-[3]" />
               </button>
               <button
                 onClick={handleMinimize}
-                className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors flex items-center justify-center group"
+                className="w-3.5 h-3.5 rounded-full bg-[#E5A50A] hover:bg-[#FFC107] transition-transform active:scale-90 flex items-center justify-center group"
+                title="Minimize"
+                aria-label="Minimize"
               >
-                <FiMinus className="w-2 h-2 text-yellow-900 opacity-0 group-hover:opacity-100" />
+                <Minus className="w-2.5 h-2.5 text-black/80 opacity-0 group-hover:opacity-100 transition-opacity stroke-[3]" />
               </button>
               <button
                 onClick={handleMaximize}
-                className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors flex items-center justify-center group"
+                className="w-3.5 h-3.5 rounded-full bg-[#26A269] hover:bg-[#2EC27E] transition-transform active:scale-90 flex items-center justify-center group hidden sm:flex"
+                title={isMaximized ? 'Restore' : 'Maximize'}
+                aria-label="Maximize"
               >
-                <FiMaximize2 className="w-2 h-2 text-green-900 opacity-0 group-hover:opacity-100" />
+                {isMaximized ? (
+                  <Copy className="w-2 h-2 text-black/80 opacity-0 group-hover:opacity-100 transition-opacity stroke-[2.5]" />
+                ) : (
+                  <Square className="w-2 h-2 text-black/80 opacity-0 group-hover:opacity-100 transition-opacity stroke-[2.5]" />
+                )}
               </button>
             </div>
-            <span
-              className="text-sm font-medium absolute left-1/2 -translate-x-1/2"
-              style={{ color: currentTheme.textPrimary }}
-            >
-              {title}
-            </span>
-            <div className="w-16" />
+
+            {/* Window Title */}
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold truncate px-2">
+              <span
+                style={{
+                  color: isFocused ? currentTheme.textPrimary : currentTheme.textSecondary,
+                }}
+              >
+                {title}
+              </span>
+            </div>
+
+            {/* Right Action Hint / Spacer */}
+            <div className="w-12 flex justify-end">
+              <span className="text-[10px] font-mono opacity-30 hidden sm:inline">
+                {isMaximized ? 'MAX' : 'WIN'}
+              </span>
+            </div>
           </div>
 
-          {/* Content */}
-          <div className="flex-1 overflow-auto">{children}</div>
+          {/* Window Body */}
+          <div
+            className="flex-1 overflow-auto relative"
+            style={{ backgroundColor: currentTheme.windowBg }}
+          >
+            {children}
+          </div>
         </motion.div>
       </Rnd>
     </AnimatePresence>
@@ -137,3 +190,4 @@ const UbuntuWindow = ({ appId, title, children }: UbuntuWindowProps) => {
 };
 
 export default UbuntuWindow;
+
